@@ -7,7 +7,11 @@ export async function callClaude(messages: ChatMessage[], phase: 'philosophy' | 
   try {
     console.log(`[API] Request: phase=${phase}, messages=${messages.length}`);
     
-    const response = await fetch('http://localhost:3001/api/chat', {
+    const apiUrl = process.env.NODE_ENV === 'production' 
+      ? '/api/chat' 
+      : 'http://localhost:3001/api/chat';
+    
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
